@@ -1,8 +1,6 @@
 import numpy as np
 import tensorflow as tf
-print(tf.__version__)
-
-from tf.contrib.training import HParams
+from tensorflow.contrib.training import HParams
 
 def default_hparams():
     return HParams(
