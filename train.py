@@ -467,7 +467,7 @@ def main():
         
         while True:
             try:
-                if args.stop_after > 0 and counter >= args.stop_after:
+                if args.stop_after > 0 and current_step >= args.stop_after:
                     save()
                     break
                 now = elapsed()
