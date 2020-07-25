@@ -62,6 +62,7 @@ parser.add_argument('--sample_num', metavar='N', type=int, default=1, help='Gene
 parser.add_argument('--save_every', metavar='N', type=int, default=-1, help='Write a checkpoint every N steps')
 parser.add_argument('--save_time', metavar='N', type=float, default=15.0, help='Write a checkpoint every N minutes')
 parser.add_argument('--max_to_keep', metavar='N', type=int, default=5, help='Only keep the last N checkpoints')
+parser.add_argument('--stop_after', metavar='N', type=int, default=-1, help='Number of steps before exiting and saving')
 
 parser.add_argument('--val_dataset', metavar='PATH', type=str, default=None, help='Dataset for validation loss, defaults to --dataset.')
 parser.add_argument('--val_batch_size', metavar='SIZE', type=int, default=1, help='Batch size for validation.')
@@ -463,8 +464,12 @@ def main():
             pdb.set_trace()
 
         last_saved_time = elapsed()
+        
         while True:
             try:
+                if args.stop_after > 0 and counter >= args.stop_after:
+                    save()
+                    break
                 now = elapsed()
                 if args.save_time > 0 and (((now - last_saved_time) / 60.0) >= args.save_time):
                     save()
